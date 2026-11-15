@@ -15,7 +15,7 @@ Die drei Industrie-Aufgaben orientieren sich an den Stationen einer Industrie-4.
 
 Erstellt für den Unterricht an der Jakob-Preh-Schule ([bsnes.de](https://www.bsnes.de)).
 
-**Live-Version:** [Hier direkt anschauen](https://flowthetensor.github.io/PW41-Reinforcement-p5/)
+**Live-Version:** [Hier direkt anschauen](https://flowthetensor.github.io/LS-Reinforcement-Learning/)
 
 ---
 
@@ -306,3 +306,26 @@ Am einfachsten in VS Code mit der Erweiterung **Live Server**: Rechtsklick auf `
 - Neue Aufgabe hinzufügen: eine Datei in `szenarien/` anlegen, die `szenarioRegistrieren({...})` aufruft (Aufbau siehe Kopf von `sketch.js` und `szenarien/wagen.js`), und in `index.html` einbinden. Jede Datei ist in eine Funktion eingeschlossen, damit sich Namen nicht in die Quere kommen.
 - Industrie-Aufgaben getestet: Lernen mit den Voreinstellungen – Sortierstation 100 % (beide Varianten), Wartung ≈ 550–575 € je Schicht, Hochregallager ≈ 245–255 s je Schicht.
 - Ältere Q-Tabellen (Wagen mit Stab, erste Programmversion) lassen sich weiterhin laden.
+
+## Lizenz
+
+[![CC BY 4.0](https://img.shields.io/badge/Lizenz-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/deed.de)
+
+**KI lernt · Reinforcement Learning** von **Christoph Rothaug, Jakob-Preh-Schule Bad Neustadt**, steht unter der Lizenz [Creative Commons Namensnennung 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.de). Der vollständige Lizenztext steht in der Datei [`LICENSE`](LICENSE).
+
+Du darfst das Material (Quellcode, Texte, Aufgaben und Grafiken) kopieren, weitergeben und verändern, auch kommerziell. Dafür musst du
+
+- den Urheber nennen: *Christoph Rothaug, Jakob-Preh-Schule Bad Neustadt*,
+- auf die Lizenz verlinken: <https://creativecommons.org/licenses/by/4.0/deed.de>,
+- angeben, ob du etwas verändert hast.
+
+Vorschlag für die Namensnennung: *„KI lernt · Reinforcement Learning“ von Christoph Rothaug, Jakob-Preh-Schule Bad Neustadt, CC BY 4.0, https://github.com/FlowTheTensor/LS-Reinforcement-Learning*
+
+**Ausgenommen** von dieser Lizenz sind:
+
+| Bestandteil | Rechte |
+|---|---|
+| `libraries/p5.min.js` | [p5.js](https://p5js.org), GNU LGPL 2.1 |
+| `libraries/p5.sound.min.js` | [p5.sound](https://p5js.org/reference/p5.sound/), GNU LGPL 2.1 |
+| `assets/logo-jps.png` | Logo der Jakob-Preh-Schule – alle Rechte bei der Schule |
+| Schriften Quicksand, Inter, JetBrains Mono | über Google Fonts eingebunden, SIL Open Font License 1.1 |

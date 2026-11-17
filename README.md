@@ -53,6 +53,7 @@ Die Grundbegriffe des Reinforcement Learnings stecken alle in der Aufgabe:
 | **← →** halten | Wagen selbst schieben (Modus „Selbst steuern“) |
 | Klick neben den Stab | Stab anstupsen – fängt der Agent das ab? |
 | Maus über der Q-Tabelle | Fächer und Q-Werte dieses Zustands |
+| Mond / Sonne oben rechts | dunkles oder helles Farbschema; die Wahl wird im Browser gespeichert und gilt für alle Lernsituationen |
 
 **Modi**
 
@@ -273,6 +274,7 @@ Das ist kurz und leistungsfähig, aber das Lernen bleibt eine Blackbox. Hier wir
 | `szenarien/wartung.js` | Wartung der Bearbeitungsstation |
 | `szenarien/lager.js` | Hochregallager |
 | `assets/logo-jps.png` | Logo der Jakob-Preh-Schule |
+| `assets/logo-jps-hell.png` | Logo in Weiß für das dunkle Farbschema |
 | `libraries/p5.min.js` | p5.js (lokal, damit die Seite auch offline läuft) |
 
 ## Beispiel-Leiste (gemeinsames Schema für alle PW-Programme)
@@ -306,6 +308,7 @@ Am einfachsten in VS Code mit der Erweiterung **Live Server**: Rechtsklick auf `
 - Neue Aufgabe hinzufügen: eine Datei in `szenarien/` anlegen, die `szenarioRegistrieren({...})` aufruft (Aufbau siehe Kopf von `sketch.js` und `szenarien/wagen.js`), und in `index.html` einbinden. Jede Datei ist in eine Funktion eingeschlossen, damit sich Namen nicht in die Quere kommen.
 - Industrie-Aufgaben getestet: Lernen mit den Voreinstellungen – Sortierstation 100 % (beide Varianten), Wartung ≈ 550–575 € je Schicht, Hochregallager ≈ 245–255 s je Schicht.
 - Ältere Q-Tabellen (Wagen mit Stab, erste Programmversion) lassen sich weiterhin laden.
+- **Farbschema hell/dunkel:** Alle Farben stehen in zwei Paletten (`FARBE_HELL`, `FARBE_DUNKEL`); `FARBE` enthält die aktive Palette und wird beim Umschalten in place überschrieben. Die CSS-Variablen in `style.css` wechseln über die Klasse `dunkelmodus` am `<html>`-Element. Die Wahl steht im `localStorage` unter `jps-lernsituationen-farbschema` (ohne Speicher gilt die Systemeinstellung). Im dunklen Schema zeigt die Kopfzeile `assets/logo-jps-hell.png`.
 
 ## Lizenz
 
@@ -327,5 +330,5 @@ Vorschlag für die Namensnennung: *„KI lernt · Reinforcement Learning“ von 
 |---|---|
 | `libraries/p5.min.js` | [p5.js](https://p5js.org), GNU LGPL 2.1 |
 | `libraries/p5.sound.min.js` | [p5.sound](https://p5js.org/reference/p5.sound/), GNU LGPL 2.1 |
-| `assets/logo-jps.png` | Logo der Jakob-Preh-Schule – alle Rechte bei der Schule |
+| `assets/logo-jps.png`, `assets/logo-jps-hell.png` | Logo der Jakob-Preh-Schule – alle Rechte bei der Schule |
 | Schriften Quicksand, Inter, JetBrains Mono | über Google Fonts eingebunden, SIL Open Font License 1.1 |

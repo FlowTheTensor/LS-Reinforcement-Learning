@@ -89,9 +89,9 @@ const KV = { x: 74, y: 542, w: 570, h: 98 };
 
 const TEMPI = ["Zeitlupe", "Echtzeit", "schnell", "Turbo"];
 
-// Farben nach dem Corporate Design der Jakob-Preh-Schule (bsnes.de):
+// Farben (hell und dunkel) nach dem Corporate Design der Jakob-Preh-Schule (bsnes.de):
 // Papierweiß, Logo-Schwarz, Schul-Rot als Akzent, Senf als zweiter Akzent.
-const FARBE = {
+const FARBE_HELL = {
   papier: [251, 249, 245],
   flaeche: [255, 255, 255],
   flaeche2: [243, 238, 230],
@@ -106,7 +106,76 @@ const FARBE = {
   links: [44, 92, 150], // blau
   rechts: [184, 122, 28], // Senf
   dunkel: [72, 70, 66],
+  // Flächen und Schrift auf Flächen (für das dunkle Schema nötig)
+  textInvers: [255, 255, 255],
+  dunkelFlaeche: [29, 29, 28],
+  schatten: [29, 29, 28],
+  akzentFlaeche: [253, 240, 242],
+  akzentLinie: [240, 200, 208],
+  rotFlaeche: [251, 225, 230],
+  gruenFlaeche: [228, 241, 233],
 };
+
+const FARBE_DUNKEL = {
+  papier: [22, 22, 21],
+  flaeche: [32, 31, 30],
+  flaeche2: [44, 42, 40],
+  linie: [62, 59, 55],
+  text: [236, 232, 224],
+  grau: [184, 178, 168],
+  blass: [140, 135, 126],
+  akzent: [236, 76, 98],
+  akzentHell: [255, 64, 92],
+  senf: [222, 166, 72],
+  gruen: [96, 186, 132],
+  links: [104, 156, 222],
+  rechts: [222, 166, 72],
+  dunkel: [200, 195, 186],
+  textInvers: [22, 22, 21],
+  dunkelFlaeche: [70, 67, 62],
+  schatten: [0, 0, 0],
+  akzentFlaeche: [52, 27, 32],
+  akzentLinie: [104, 44, 56],
+  rotFlaeche: [72, 32, 40],
+  gruenFlaeche: [30, 54, 41],
+};
+
+const FARBE = {};
+
+// --- Farbschema hell/dunkel ---------------------------------------------------
+// FARBE enthält immer die aktive Palette. Beim Umschalten werden die Arrays
+// in place überschrieben, damit Verweise wie [FARBE.blau, …] gültig bleiben.
+// Die Wahl gilt für alle Lernsituationen (gleicher localStorage-Schlüssel).
+const FARBSCHEMA_SCHLUESSEL = "jps-lernsituationen-farbschema";
+let dunkelModus = false;
+
+function setzeFarbschema(dunkel) {
+  dunkelModus = !!dunkel;
+  const quelle = dunkelModus ? FARBE_DUNKEL : FARBE_HELL;
+  for (const k in quelle) {
+    if (FARBE[k]) {
+      FARBE[k].splice(0, FARBE[k].length, ...quelle[k]);
+    } else {
+      FARBE[k] = quelle[k].slice();
+    }
+  }
+  document.documentElement.classList.toggle("dunkelmodus", dunkelModus);
+}
+
+function gespeichertesFarbschema() {
+  try {
+    const v = localStorage.getItem(FARBSCHEMA_SCHLUESSEL);
+    if (v === "dunkel" || v === "hell") {
+      return v === "dunkel";
+    }
+  } catch (e) {
+    // kein Speicher verfügbar (z. B. privater Modus) – Systemeinstellung nehmen
+  }
+  return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+}
+
+setzeFarbschema(gespeichertesFarbschema());
+
 
 const ART_FARBE = {
   training: [200, 30, 58],
@@ -590,7 +659,7 @@ function mausY() {
 // Karte im Stil der Schule: weiße Fläche, feine Linie, Titel mit rotem Punkt
 function panel(p) {
   noStroke();
-  fill(29, 29, 28, 10);
+  fill(...FARBE.schatten, 10);
   rect(p.x + 1, p.y + 3, p.w, p.h, 12);
   fill(...FARBE.flaeche);
   stroke(...FARBE.linie);
@@ -663,7 +732,7 @@ function plakette(txt, x, y, farbe) {
   textSize(19);
   textAlign(CENTER, CENTER);
   const b = textWidth(txt) + 36;
-  fill(255, 235);
+  fill(...FARBE.flaeche, 235);
   stroke(...farbe);
   strokeWeight(1.5);
   rect(x - b / 2, y - 16, b, 32, 16);
@@ -710,9 +779,9 @@ function zeichneKopf() {
 // Beispiel (HTML-Knöpfe, siehe ui.js). Gleiches Schema in allen PW-Programmen.
 function zeichneBeispielLeiste() {
   noStroke();
-  fill(253, 240, 242);
+  fill(...FARBE.akzentFlaeche);
   rect(0, 56, W, LEISTE);
-  stroke(240, 200, 208);
+  stroke(...FARBE.akzentLinie);
   strokeWeight(1);
   line(0, 56 + LEISTE, W, 56 + LEISTE);
   noStroke();
@@ -1020,7 +1089,7 @@ function zeichneQTabelle() {
           textAlign(CENTER, CENTER);
           text(zahl(q[a], stellen), c.x + (a + 0.5) * tw, c.y + c.h / 2);
           if (a > 0) {
-            stroke(255, 120);
+            stroke(...FARBE.flaeche, 120);
             strokeWeight(1);
             line(c.x + a * tw, c.y + 3, c.x + a * tw, c.y + c.h - 3);
             noStroke();
@@ -1420,7 +1489,7 @@ function zeichneKreislauf() {
   const kasten = (y, titel, unter, aktiv) => {
     stroke(...(aktiv ? FARBE.akzent : FARBE.linie));
     strokeWeight(aktiv ? 2 : 1);
-    fill(...(aktiv ? [253, 240, 242] : FARBE.flaeche2));
+    fill(...(aktiv ? FARBE.akzentFlaeche : FARBE.flaeche2));
     rect(x0, y, x1 - x0, hb, 8);
     noStroke();
     fill(...FARBE.text);
@@ -1532,7 +1601,7 @@ function zeichneTooltip() {
   fill(...FARBE.text, 235);
   noStroke();
   rect(x, y, b, h, 6);
-  fill(255);
+  fill(...FARBE.textInvers);
   textAlign(LEFT, TOP);
   for (let i = 0; i < zeilen.length; i++) {
     text(zeilen[i], x + 10, y + 7 + i * 17);
